@@ -2,10 +2,12 @@
 
 use App\Http\Controllers\AdminOrderController;
 use App\Http\Controllers\AdminUserController;
+use App\Http\Controllers\ClientOrderController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\JWTAuthController;
 use App\Http\Middleware\AdminMiddleware;
+use App\Http\Middleware\ClientMiddleware;
 use App\Http\Middleware\JwtMiddleware;
 
 Route::get('/user', function (Request $request) {
@@ -40,7 +42,10 @@ Route::middleware([
 // Роуты для пользователей
 Route::middleware([
     JwtMiddleware::class,
-    AdminMiddleware::class
-])->prefix('user')->group(function () {
-
+    ClientMiddleware::class
+])->prefix('client')->group(function () {
+    Route::get('/get_orders/{orderId?}', [ClientOrderController::class, 'getOrders']);
+    Route::post('/add_order', [ClientOrderController::class, 'addOrder']);
+    Route::post('/update_order/{orderId}', [ClientOrderController::class, 'updateOrder']);
+    Route::delete('/delete_order/{orderId}', [ClientOrderController::class, 'deleteOrder']);
 });
