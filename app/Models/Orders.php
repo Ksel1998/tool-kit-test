@@ -17,4 +17,10 @@ class Orders extends Model
         'phone',
         'user_id'
     ];
+
+    // Взять все файлы заявки
+    public function getFiles()
+    {
+        return $this->hasMany(OrderFiles::class, 'orders_id', 'id');
+    }
 }

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminOrderController;
 use App\Http\Controllers\AdminUserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -29,4 +30,17 @@ Route::middleware([
     Route::get('/get_all_users', [AdminUserController::class, 'getAllUsers']);
     Route::patch('/update_user/{userId}', [AdminUserController::class, 'updateUser']);
     Route::delete('/delete_user/{userId}', [AdminUserController::class, 'deleteUser']);
+
+    // Управление заявками
+    Route::get('/get_orders/{userId?}', [AdminOrderController::class, 'getOrders']);
+    Route::post('/update_order/{orderId}', [AdminOrderController::class, 'updateOrder']);
+    Route::delete('/delete_order/{orderId}', [AdminOrderController::class, 'deleteOrder']);
+});
+
+// Роуты для пользователей
+Route::middleware([
+    JwtMiddleware::class,
+    AdminMiddleware::class
+])->prefix('user')->group(function () {
+
 });

@@ -11,6 +11,6 @@ class OrderFiles extends Model
     protected $fillable = [
         'item_name',
         'path',
-        'order_id'
+        'orders_id'
     ];
 }

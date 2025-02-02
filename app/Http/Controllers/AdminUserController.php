@@ -6,6 +6,7 @@ use App\Models\Orders;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\File;
 
 class AdminUserController extends Controller
 {
@@ -57,6 +58,21 @@ class AdminUserController extends Controller
             return response()->json([
                 'status' => 'Пользователь не найден'
             ], 204);
+        }
+
+        $orders = Orders::where('user_id', $user->id)->with(['getFiles'])->get();
+
+        foreach ($orders as $order)
+        {
+            foreach ($order->getFiles as $file)
+            {
+                $path = storage_path('app/public/' . $file->path);
+
+                if (File::exists($path))
+                {
+                    File::delete($path);
+                }
+            }
         }
 
         $userName = $user->name;
