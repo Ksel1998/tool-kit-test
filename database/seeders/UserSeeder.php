@@ -3,12 +3,12 @@
 namespace Database\Seeders;
 
 use App\Models\UserRoles;
-use App\Models\Users;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
-class UsersSeeder extends Seeder
+class UserSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -29,6 +29,6 @@ class UsersSeeder extends Seeder
         ]);
 
         // Создаем тестовых клиентов
-        Users::factory(5)->create();
+        User::factory(5)->create();
     }
 }

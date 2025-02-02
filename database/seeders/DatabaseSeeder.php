@@ -15,7 +15,7 @@ class DatabaseSeeder extends Seeder
         $this->call(UserRolesSeeder::class);
 
         // Создание тестовых пользователей
-        $this->call(UsersSeeder::class);
+        $this->call(UserSeeder::class);
 
         // // Создаем тестовые заявки
         $this->call(OrdersSeeder::class);

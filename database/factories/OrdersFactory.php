@@ -4,7 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Orders;
 use App\Models\UserRoles;
-use App\Models\Users;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -30,7 +30,7 @@ class OrdersFactory extends Factory
             'order' => $this->faker->paragraph(2),
             'address' => $this->faker->address(),
             'phone' => $this->faker->phoneNumber(),
-            'user_id' => Users::whereNot('role_id', $adminId)->inRandomOrder()->value('id'),
+            'user_id' => User::whereNot('role_id', $adminId)->inRandomOrder()->value('id'),
             'created_at' => now(),
             'updated_at' => now()
         ];
