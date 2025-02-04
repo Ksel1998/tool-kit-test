@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<ruleset name="Laravel Ruleset">
+    <description>Laravel Coding Standard</description>
+
+    <!-- Включение стандартов кодирования -->
+    <rule ref="PSR12"/>
+
+    <!-- Игнорирование некоторых файлов и директорий -->
+    <exclude-pattern>*/vendor/*</exclude-pattern>
+    <exclude-pattern>*/storage/*</exclude-pattern>
+    <exclude-pattern>*/bootstrap/*</exclude-pattern>
+    <exclude-pattern>*/node_modules/*</exclude-pattern>
+</ruleset>

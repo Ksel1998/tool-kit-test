@@ -25,7 +25,7 @@ class ClientMiddleware
         {
             $order = Orders::find($request->orderId);
             
-            if ($order->user_id != $user->id && $userRole->name !== 'admin')
+            if ($order->user_id !== $user->id && $userRole->name !== 'admin')
             {
                 return response()->json(['error' => 'Не хватает прав для действий'], 401);
             }
