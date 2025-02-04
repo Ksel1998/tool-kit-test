@@ -1,0 +1,807 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "tool-kit API",
+        "description": "Апи регистрации",
+        "version": "1.0"
+    },
+    "servers": [
+        {
+            "url": "http://127.0.0.1:8008",
+            "description": "Основной API-сервер"
+        }
+    ],
+    "paths": {
+        "api/admin/get_all_users": {
+            "get": {
+                "tags": [
+                    "Admin"
+                ],
+                "summary": "Получение данных всех пользователей",
+                "operationId": "30b81f87f5c580c3c8e0d0b3e8478567",
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1..."
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Успешное получение данных о пользователе",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "schema": "GetAllUsersResponse",
+                                            "properties": {
+                                                "allUsers": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "integer",
+                                                                "example": 1
+                                                            },
+                                                            "name": {
+                                                                "type": "string",
+                                                                "example": "Takeshi Kitano"
+                                                            },
+                                                            "email": {
+                                                                "type": "string",
+                                                                "format": "email",
+                                                                "example": "takeshi@mail.com"
+                                                            },
+                                                            "role_id": {
+                                                                "type": "integer",
+                                                                "example": 2
+                                                            },
+                                                            "created_at": {
+                                                                "type": "timestamp",
+                                                                "example": "2025-02-03T05:34:02.000000Z"
+                                                            },
+                                                            "updated_at": {
+                                                                "type": "timestamp",
+                                                                "example": "2025-02-03T05:34:02.000000Z"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Нехватка прав для действий",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "schema": "AdminAuthError",
+                                            "properties": {
+                                                "error": {
+                                                    "type": "string",
+                                                    "example": "Не хватает прав для действий"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/update_user/{user_id}": {
+            "patch": {
+                "tags": [
+                    "Admin"
+                ],
+                "summary": "Обновление данных пользователя",
+                "operationId": "b2ae7ae1c49ec0b3804782996d2372cd",
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1..."
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "allOf": [
+                                    {
+                                        "schema": "UserUpdateRequest",
+                                        "required": [
+                                            "userId",
+                                            "name",
+                                            "email",
+                                            "password",
+                                            "password_confirmation"
+                                        ],
+                                        "properties": {
+                                            "userId": {
+                                                "type": "integer",
+                                                "example": "5"
+                                            },
+                                            "name": {
+                                                "type": "string",
+                                                "example": "Takeshi Kitano"
+                                            },
+                                            "email": {
+                                                "type": "string",
+                                                "format": "email",
+                                                "example": "takeshi@mail.com"
+                                            },
+                                            "password": {
+                                                "type": "string",
+                                                "format": "password",
+                                                "example": "kiwami"
+                                            },
+                                            "password_confirmation": {
+                                                "type": "string",
+                                                "format": "password",
+                                                "example": "kiwami"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Успешное обновление пользователя",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "schema": "UserUpdateResponse",
+                                            "properties": {
+                                                "status": {
+                                                    "type": "string",
+                                                    "example": "Обновление прошло успешно"
+                                                },
+                                                "newData": {
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "integer",
+                                                            "example": 1
+                                                        },
+                                                        "name": {
+                                                            "type": "string",
+                                                            "example": "Takeshi Kitano"
+                                                        },
+                                                        "email": {
+                                                            "type": "string",
+                                                            "format": "email",
+                                                            "example": "takeshi@mail.com"
+                                                        },
+                                                        "role_id": {
+                                                            "type": "integer",
+                                                            "example": 2
+                                                        },
+                                                        "created_at": {
+                                                            "type": "timestamp",
+                                                            "example": "2025-02-03T05:34:02.000000Z"
+                                                        },
+                                                        "updated_at": {
+                                                            "type": "timestamp",
+                                                            "example": "2025-02-03T05:34:02.000000Z"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Ошибка валидации",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "schema": "ValidationError",
+                                            "type": "object",
+                                            "example": {
+                                                "name": [
+                                                    "The name field is required."
+                                                ],
+                                                "email": [
+                                                    "The email field is required."
+                                                ],
+                                                "password": [
+                                                    "The password must be at least 3 characters."
+                                                ],
+                                                "password_confirmation": [
+                                                    "The password field confirmation does not match."
+                                                ]
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Нехватка прав для действий",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "schema": "AdminAuthError",
+                                            "properties": {
+                                                "error": {
+                                                    "type": "string",
+                                                    "example": "Не хватает прав для действий"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/admin/delete_user/{userId}": {
+            "delete": {
+                "tags": [
+                    "Admin"
+                ],
+                "summary": "Удаление пользователя",
+                "operationId": "b37189fb0ade4bdb0feae27149afca53",
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1..."
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "allOf": [
+                                    {
+                                        "schema": "UserUpdateRequest",
+                                        "required": [
+                                            "userId"
+                                        ],
+                                        "properties": {
+                                            "userId": {
+                                                "type": "integer",
+                                                "example": "5"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Успешное удаление пользователя",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "schema": "UserUpdateResponse",
+                                            "properties": {
+                                                "status": {
+                                                    "type": "string",
+                                                    "example": "Пользователь User Name успешно удален"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "204": {
+                        "description": "Проблема с нахождением пользователя",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "schema": "UserUpdateResponse",
+                                            "properties": {
+                                                "status": {
+                                                    "type": "string",
+                                                    "example": "Пользователь не найден"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Нехватка прав для действий",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "schema": "AdminAuthError",
+                                            "properties": {
+                                                "error": {
+                                                    "type": "string",
+                                                    "example": "Не хватает прав для действий"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/register": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Регистрация нового пользователя",
+                "operationId": "8f72030045ec025193b11b778e267e33",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "allOf": [
+                                    {
+                                        "schema": "RegisterRequest",
+                                        "required": [
+                                            "name",
+                                            "email",
+                                            "password",
+                                            "password_confirmation"
+                                        ],
+                                        "properties": {
+                                            "name": {
+                                                "type": "string",
+                                                "example": "Takeshi Kitano"
+                                            },
+                                            "email": {
+                                                "type": "string",
+                                                "format": "email",
+                                                "example": "takeshi@mail.com"
+                                            },
+                                            "password": {
+                                                "type": "string",
+                                                "format": "password",
+                                                "example": "kiwami"
+                                            },
+                                            "password_confirmation": {
+                                                "type": "string",
+                                                "format": "password",
+                                                "example": "kiwami"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Пользователь успешно зарегистрирован",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "schema": "RegisterResponse",
+                                            "properties": {
+                                                "user": {
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "integer",
+                                                            "example": 1
+                                                        },
+                                                        "name": {
+                                                            "type": "string",
+                                                            "example": "Takeshi Kitano"
+                                                        },
+                                                        "email": {
+                                                            "type": "string",
+                                                            "format": "email",
+                                                            "example": "takeshi@mail.com"
+                                                        },
+                                                        "role_id": {
+                                                            "type": "integer",
+                                                            "example": 2
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                },
+                                                "token": {
+                                                    "type": "string",
+                                                    "example": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1..."
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Ошибка валидации",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "schema": "ValidationError",
+                                            "type": "object",
+                                            "example": {
+                                                "email": [
+                                                    "The email field is required."
+                                                ],
+                                                "password": [
+                                                    "The password must be at least 3 characters."
+                                                ]
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/login": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Вход в акаунт пользователя",
+                "operationId": "d6df89101ce5217ced9a4cb29e0e4881",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "allOf": [
+                                    {
+                                        "schema": "LoginRequest",
+                                        "required": [
+                                            "email",
+                                            "password"
+                                        ],
+                                        "properties": {
+                                            "email": {
+                                                "type": "string",
+                                                "format": "email",
+                                                "example": "takeshi@mail.com"
+                                            },
+                                            "password": {
+                                                "type": "string",
+                                                "format": "password",
+                                                "example": "kiwami"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Пользователь успешно вошел в акаунт",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "schema": "LoginResponse",
+                                            "properties": {
+                                                "token": {
+                                                    "type": "string",
+                                                    "example": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1..."
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Неправильные данные",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "schema": "LoginError",
+                                            "properties": {
+                                                "error": {
+                                                    "type": "string",
+                                                    "example": "Неправильные данные"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Проблемы с токеном",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "schema": "LoginError",
+                                            "properties": {
+                                                "error": {
+                                                    "type": "string",
+                                                    "example": "Не получилось создать токен"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "api/user": {
+            "get": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Получение данных о текущем пользователе",
+                "operationId": "4f1444ed0e23d2599f77cb5901663f31",
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1..."
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Успешное получение данных о пользователе",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "schema": "UserResponse",
+                                            "properties": {
+                                                "user": {
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "integer",
+                                                            "example": 1
+                                                        },
+                                                        "name": {
+                                                            "type": "string",
+                                                            "example": "Takeshi Kitano"
+                                                        },
+                                                        "email": {
+                                                            "type": "string",
+                                                            "format": "email",
+                                                            "example": "takeshi@mail.com"
+                                                        },
+                                                        "role_id": {
+                                                            "type": "integer",
+                                                            "example": 2
+                                                        },
+                                                        "created_at": {
+                                                            "type": "timestamp",
+                                                            "example": "2025-02-03T05:34:02.000000Z"
+                                                        },
+                                                        "updated_at": {
+                                                            "type": "timestamp",
+                                                            "example": "2025-02-03T05:34:02.000000Z"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Пользователь не найден",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "schema": "LoginError",
+                                            "properties": {
+                                                "error": {
+                                                    "type": "string",
+                                                    "example": "Пользователь не найден"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Неправильный токен",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "schema": "LoginError",
+                                            "properties": {
+                                                "error": {
+                                                    "type": "string",
+                                                    "example": "Неправильный токен"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/logout": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Выход из акаунта",
+                "operationId": "72ab0c4d4eadf39a22fe70b102074f44",
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1..."
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "allOf": [
+                                    {
+                                        "schema": "LoginRequest",
+                                        "required": [
+                                            "email",
+                                            "password"
+                                        ],
+                                        "properties": {
+                                            "email": {
+                                                "type": "string",
+                                                "format": "email",
+                                                "example": "takeshi@mail.com"
+                                            },
+                                            "password": {
+                                                "type": "string",
+                                                "format": "password",
+                                                "example": "kiwami"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Успешный выход из акаунта",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "schema": "LoginResponse",
+                                            "properties": {
+                                                "message": {
+                                                    "type": "string",
+                                                    "example": "Успешный выход из акаунта"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Admin",
+            "description": "Admin"
+        },
+        {
+            "name": "Auth",
+            "description": "Auth"
+        }
+    ]
+}
