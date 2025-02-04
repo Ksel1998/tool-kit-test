@@ -134,7 +134,7 @@ use App\Http\Controllers\Controller;
  *  ),
  * 
  *  @OA\Get(
- *      path="api/user",
+ *      path="/api/user",
  *      summary="Получение данных о текущем пользователе",
  *      tags={"Auth"},
  *      @OA\Parameter(

@@ -12,13 +12,422 @@
         }
     ],
     "paths": {
-        "api/admin/get_all_users": {
+        "/api/admin/get_orders/{userId}": {
+            "get": {
+                "tags": [
+                    "Admin"
+                ],
+                "summary": "Получение заявок пользователей",
+                "description": "Если есть userId - вернет все заявки пользователя. Если нет, то вернет все заявки",
+                "operationId": "0765051d2bd414f5d7973a9156f88915",
+                "parameters": [
+                    {
+                        "name": "userId",
+                        "in": "path",
+                        "description": "ID пользователя (необязательный параметр)",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "example": "5"
+                        }
+                    },
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true,
+                        "schema": {
+                            "schema": "GetAdminOrdersRequest",
+                            "type": "string",
+                            "example": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1..."
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Успешное получение заявок",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "schema": "GetAdminOrdersResponse",
+                                            "properties": {
+                                                "orders": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "integer",
+                                                                "example": 1
+                                                            },
+                                                            "order": {
+                                                                "type": "string",
+                                                                "example": "Animi veniam aliquid vel quia quam at."
+                                                            },
+                                                            "address": {
+                                                                "type": "string",
+                                                                "example": "г. Москва, ул. Пушкина 4б"
+                                                            },
+                                                            "phone": {
+                                                                "type": "string",
+                                                                "example": "88005553535"
+                                                            },
+                                                            "user_id": {
+                                                                "type": "integer",
+                                                                "example": 3
+                                                            },
+                                                            "created_at": {
+                                                                "type": "timestamp",
+                                                                "example": "2025-02-03T05:34:02.000000Z"
+                                                            },
+                                                            "updated_at": {
+                                                                "type": "timestamp",
+                                                                "example": "2025-02-03T05:34:02.000000Z"
+                                                            },
+                                                            "get_files": {
+                                                                "type": "array",
+                                                                "items": {
+                                                                    "properties": {
+                                                                        "id": {
+                                                                            "type": "integer",
+                                                                            "example": 84
+                                                                        },
+                                                                        "item_name": {
+                                                                            "type": "string",
+                                                                            "example": "test.jpg"
+                                                                        },
+                                                                        "path": {
+                                                                            "type": "string",
+                                                                            "example": "/storage/app/public/test.jpg"
+                                                                        },
+                                                                        "orders_id": {
+                                                                            "type": "integer",
+                                                                            "example": 1
+                                                                        },
+                                                                        "created_at": {
+                                                                            "type": "timestamp",
+                                                                            "example": "2025-02-03T05:34:02.000000Z"
+                                                                        },
+                                                                        "updated_at": {
+                                                                            "type": "timestamp",
+                                                                            "example": "2025-02-03T05:34:02.000000Z"
+                                                                        }
+                                                                    },
+                                                                    "type": "object"
+                                                                }
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Нехватка прав для действий",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "schema": "AdminAuthError",
+                                            "properties": {
+                                                "error": {
+                                                    "type": "string",
+                                                    "example": "Не хватает прав для действий"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/admin/update_order/{orderId}": {
+            "post": {
+                "tags": [
+                    "Admin"
+                ],
+                "summary": "Обновление заявки администратором",
+                "operationId": "c7d7230a7c33b9c1a57f341937baecdf",
+                "parameters": [
+                    {
+                        "name": "orderId",
+                        "in": "path",
+                        "description": "ID заявки для обновления",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 5
+                        }
+                    },
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1..."
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "schema": "UpdateAdminOrderRequest",
+                                "required": [
+                                    "order",
+                                    "address",
+                                    "phone"
+                                ],
+                                "properties": {
+                                    "order": {
+                                        "type": "string",
+                                        "example": "Animi veniam aliquid vel quia quam at."
+                                    },
+                                    "address": {
+                                        "type": "string",
+                                        "example": "г. Москва, ул. Пушкина 4б"
+                                    },
+                                    "phone": {
+                                        "type": "string",
+                                        "example": "88005553535"
+                                    },
+                                    "files": {
+                                        "type": "string",
+                                        "example": "Массив для загрузки файлов"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Успешное обновление заявки",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "schema": "UpdateAdminOrderResponse",
+                                            "properties": {
+                                                "order": {
+                                                    "type": "string",
+                                                    "example": "Animi veniam aliquid vel quia quam at."
+                                                },
+                                                "address": {
+                                                    "type": "string",
+                                                    "example": "г. Москва, ул. Пушкина 4б"
+                                                },
+                                                "phone": {
+                                                    "type": "string",
+                                                    "example": "88005553535"
+                                                },
+                                                "files": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "integer",
+                                                                "example": 84
+                                                            },
+                                                            "item_name": {
+                                                                "type": "string",
+                                                                "example": "test.jpg"
+                                                            },
+                                                            "path": {
+                                                                "type": "string",
+                                                                "example": "/storage/app/public/test.jpg"
+                                                            },
+                                                            "orders_id": {
+                                                                "type": "integer",
+                                                                "example": 1
+                                                            },
+                                                            "created_at": {
+                                                                "type": "timestamp",
+                                                                "example": "2025-02-03T05:34:02.000000Z"
+                                                            },
+                                                            "updated_at": {
+                                                                "type": "timestamp",
+                                                                "example": "2025-02-03T05:34:02.000000Z"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Ошибка валидации",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "schema": "ValidationError",
+                                            "type": "object",
+                                            "example": {
+                                                "order": [
+                                                    "The order field is required."
+                                                ],
+                                                "address": [
+                                                    "The address field is required."
+                                                ],
+                                                "phone": [
+                                                    "The phone field is required."
+                                                ]
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Нехватка прав для действий",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "schema": "AdminAuthError",
+                                            "properties": {
+                                                "error": {
+                                                    "type": "string",
+                                                    "example": "Не хватает прав для действий"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/admin/delete_order/{orderId}": {
+            "delete": {
+                "tags": [
+                    "Admin"
+                ],
+                "summary": "Обновление заявки администратором",
+                "operationId": "da2caccff9a5cd46316b4acb31e72b65",
+                "parameters": [
+                    {
+                        "name": "orderId",
+                        "in": "path",
+                        "description": "ID заявки для удаления",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 5
+                        }
+                    },
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1..."
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Успешное удаление заявки",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "schema": "OrderAdminDeleteResponse",
+                                            "properties": {
+                                                "status": {
+                                                    "type": "string",
+                                                    "example": "Заявка успешно удалена"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "204": {
+                        "description": "Проблема с нахождением заявки",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "schema": "OrderAdminDeleteResponse",
+                                            "properties": {
+                                                "status": {
+                                                    "type": "string",
+                                                    "example": "Заявка не найдена"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Нехватка прав для действий",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "schema": "AdminAuthError",
+                                            "properties": {
+                                                "error": {
+                                                    "type": "string",
+                                                    "example": "Не хватает прав для действий"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/admin/get_all_users": {
             "get": {
                 "tags": [
                     "Admin"
                 ],
                 "summary": "Получение данных всех пользователей",
-                "operationId": "30b81f87f5c580c3c8e0d0b3e8478567",
+                "operationId": "6974d95d1b5e6cca1fb2483c60eda7fb",
                 "parameters": [
                     {
                         "name": "Authorization",
@@ -105,14 +514,24 @@
                 }
             }
         },
-        "/api/update_user/{user_id}": {
+        "/api/admin/update_user/{user_id}": {
             "patch": {
                 "tags": [
                     "Admin"
                 ],
                 "summary": "Обновление данных пользователя",
-                "operationId": "b2ae7ae1c49ec0b3804782996d2372cd",
+                "operationId": "c17a14371e8454ab1f07b36d0e08f583",
                 "parameters": [
+                    {
+                        "name": "userId",
+                        "in": "path",
+                        "description": "ID пользователя (необязательный параметр)",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": "5"
+                        }
+                    },
                     {
                         "name": "Authorization",
                         "in": "header",
@@ -132,17 +551,12 @@
                                     {
                                         "schema": "UserUpdateRequest",
                                         "required": [
-                                            "userId",
                                             "name",
                                             "email",
                                             "password",
                                             "password_confirmation"
                                         ],
                                         "properties": {
-                                            "userId": {
-                                                "type": "integer",
-                                                "example": "5"
-                                            },
                                             "name": {
                                                 "type": "string",
                                                 "example": "Takeshi Kitano"
@@ -284,6 +698,16 @@
                 "operationId": "b37189fb0ade4bdb0feae27149afca53",
                 "parameters": [
                     {
+                        "name": "userId",
+                        "in": "path",
+                        "description": "ID клиента для удаления",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 5
+                        }
+                    },
+                    {
                         "name": "Authorization",
                         "in": "header",
                         "required": true,
@@ -293,30 +717,6 @@
                         }
                     }
                 ],
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "allOf": [
-                                    {
-                                        "schema": "UserUpdateRequest",
-                                        "required": [
-                                            "userId"
-                                        ],
-                                        "properties": {
-                                            "userId": {
-                                                "type": "integer",
-                                                "example": "5"
-                                            }
-                                        },
-                                        "type": "object"
-                                    }
-                                ]
-                            }
-                        }
-                    }
-                },
                 "responses": {
                     "200": {
                         "description": "Успешное удаление пользователя",
@@ -325,7 +725,7 @@
                                 "schema": {
                                     "allOf": [
                                         {
-                                            "schema": "UserUpdateResponse",
+                                            "schema": "UserAdminUpdateResponse",
                                             "properties": {
                                                 "status": {
                                                     "type": "string",
@@ -608,13 +1008,13 @@
                 }
             }
         },
-        "api/user": {
+        "/api/user": {
             "get": {
                 "tags": [
                     "Auth"
                 ],
                 "summary": "Получение данных о текущем пользователе",
-                "operationId": "4f1444ed0e23d2599f77cb5901663f31",
+                "operationId": "014e051bc8bb9ea61e7d4d77c7c368c1",
                 "parameters": [
                     {
                         "name": "Authorization",

@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 
 /**
  *  @OA\Get(
- *      path="api/admin/get_all_users",
+ *      path="/api/admin/get_all_users",
  *      summary="Получение данных всех пользователей",
  *      tags={"Admin"},
  *      @OA\Parameter(
@@ -60,9 +60,16 @@ use App\Http\Controllers\Controller;
  *  ),
  * 
  *  @OA\Patch(
- *      path="/api/update_user/{user_id}",
+ *      path="/api/admin/update_user/{user_id}",
  *      summary="Обновление данных пользователя",
  *      tags={"Admin"},
+ *      @OA\Parameter(
+ *          name="userId",
+ *          in="path",
+ *          required=true,
+ *          description="ID пользователя (необязательный параметр)",
+ *          @OA\Schema(type="integer", example="5")
+ *      ),
  *      @OA\Parameter(
  *          name="Authorization",
  *          in="header",
@@ -79,8 +86,7 @@ use App\Http\Controllers\Controller;
  *                  @OA\Schema(
  *                      schema="UserUpdateRequest",
  *                      type="object",
- *                      required={"userId", "name", "email", "password", "password_confirmation"},
- *                      @OA\Property(property="userId", type="integer", example="5"),
+ *                      required={"name", "email", "password", "password_confirmation"},
  *                      @OA\Property(property="name", type="string", example="Takeshi Kitano"),
  *                      @OA\Property(property="email", type="string", format="email", example="takeshi@mail.com"),
  *                      @OA\Property(property="password", type="string", format="password", example="kiwami"),
@@ -151,25 +157,19 @@ use App\Http\Controllers\Controller;
  *      summary="Удаление пользователя",
  *      tags={"Admin"},
  *      @OA\Parameter(
+ *          name="userId",
+ *          in="path",
+ *          required=true,
+ *          description="ID клиента для удаления",
+ *          @OA\Schema(type="integer", example=5)
+ *      ),
+ *      @OA\Parameter(
  *          name="Authorization",
  *          in="header",
  *          required=true,
  *          @OA\Schema(
  *              type="string",
  *              example="Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1..."
- *          )
- *      ),
- *      @OA\RequestBody(
- *          required=true,
- *          @OA\JsonContent(
- *              allOf={
- *                  @OA\Schema(
- *                      schema="UserUpdateRequest",
- *                      type="object",
- *                      required={"userId"},
- *                      @OA\Property(property="userId", type="integer", example="5"),
- *                  )
- *              }
  *          )
  *      ),
  * 
@@ -179,7 +179,7 @@ use App\Http\Controllers\Controller;
  *          @OA\JsonContent(
  *              allOf={
  *                  @OA\Schema(
- *                      schema="UserUpdateResponse",
+ *                      schema="UserAdminUpdateResponse",
  *                      type="object",
  *                      @OA\Property(property="status", type="string", example="Пользователь User Name успешно удален")
  *                  )
