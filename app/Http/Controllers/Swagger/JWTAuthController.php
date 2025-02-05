@@ -24,7 +24,6 @@ use App\Http\Controllers\Controller;
  *          @OA\JsonContent(
  *              allOf={
  *                  @OA\Schema(
- *                      schema="RegisterRequest",
  *                      type="object",
  *                      required={"name", "email", "password", "password_confirmation"},
  *                      @OA\Property(property="name", type="string", example="Takeshi Kitano"),
@@ -42,7 +41,6 @@ use App\Http\Controllers\Controller;
  *          @OA\JsonContent(
  *              allOf={
  *                  @OA\Schema(
- *                      schema="RegisterResponse",
  *                      type="object",
  *                      @OA\Property(property="user", type="object",
  *                          @OA\Property(property="id", type="integer", example=1),
@@ -62,7 +60,6 @@ use App\Http\Controllers\Controller;
  *          @OA\JsonContent(
  *              allOf={
  *                  @OA\Schema(
- *                      schema="ValidationError",
  *                      type="object",
  *                      example={"email": {"The email field is required."}, "password": {"The password must be at least 3 characters."}}
  *                  )
@@ -80,7 +77,6 @@ use App\Http\Controllers\Controller;
  *          @OA\JsonContent(
  *              allOf={
  *                  @OA\Schema(
- *                      schema="LoginRequest",
  *                      type="object",
  *                      required={"email", "password"},
  *                      @OA\Property(property="email", type="string", format="email", example="takeshi@mail.com"),
@@ -96,7 +92,6 @@ use App\Http\Controllers\Controller;
  *          @OA\JsonContent(
  *              allOf={
  *                  @OA\Schema(
- *                      schema="LoginResponse",
  *                      type="object",
  *                      @OA\Property(property="token", type="string", example="eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1...")
  *                  )
@@ -110,7 +105,6 @@ use App\Http\Controllers\Controller;
  *          @OA\JsonContent(
  *              allOf={
  *                  @OA\Schema(
- *                      schema="LoginError",
  *                      type="object",
  *                      @OA\Property(property="error", type="string", example="Неправильные данные")
  *                  )
@@ -124,7 +118,6 @@ use App\Http\Controllers\Controller;
  *          @OA\JsonContent(
  *              allOf={
  *                  @OA\Schema(
- *                      schema="LoginError",
  *                      type="object",
  *                      @OA\Property(property="error", type="string", example="Не получилось создать токен")
  *                  )
@@ -153,7 +146,6 @@ use App\Http\Controllers\Controller;
  *          @OA\JsonContent(
  *              allOf={
  *                  @OA\Schema(
- *                      schema="UserResponse",
  *                      type="object",
  *                      @OA\Property(property="user", type="object",
  *                          @OA\Property(property="id", type="integer", example=1),
@@ -174,7 +166,6 @@ use App\Http\Controllers\Controller;
  *          @OA\JsonContent(
  *              allOf={
  *                  @OA\Schema(
- *                      schema="LoginError",
  *                      type="object",
  *                      @OA\Property(property="error", type="string", example="Пользователь не найден")
  *                  )
@@ -183,12 +174,11 @@ use App\Http\Controllers\Controller;
  *      ),
  * 
  *      @OA\Response(
- *          response=400,
+ *          response=401,
  *          description="Неправильный токен",
  *          @OA\JsonContent(
  *              allOf={
  *                  @OA\Schema(
- *                      schema="LoginError",
  *                      type="object",
  *                      @OA\Property(property="error", type="string", example="Неправильный токен")
  *                  )
@@ -215,7 +205,6 @@ use App\Http\Controllers\Controller;
  *          @OA\JsonContent(
  *              allOf={
  *                  @OA\Schema(
- *                      schema="LoginRequest",
  *                      type="object",
  *                      required={"email", "password"},
  *                      @OA\Property(property="email", type="string", format="email", example="takeshi@mail.com"),
@@ -231,9 +220,21 @@ use App\Http\Controllers\Controller;
  *          @OA\JsonContent(
  *              allOf={
  *                  @OA\Schema(
- *                      schema="LoginResponse",
  *                      type="object",
  *                      @OA\Property(property="message", type="string", example="Успешный выход из акаунта")
+ *                  )
+ *              }
+ *          )
+ *      ),
+ * 
+ *      @OA\Response(
+ *          response=401,
+ *          description="Неправильный токен",
+ *          @OA\JsonContent(
+ *              allOf={
+ *                  @OA\Schema(
+ *                      type="object",
+ *                      @OA\Property(property="error", type="string", example="Неправильный токен")
  *                  )
  *              }
  *          )

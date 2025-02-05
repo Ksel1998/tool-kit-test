@@ -27,7 +27,7 @@ class ClientMiddleware
             
             if ($order->user_id !== $user->id && $userRole->name !== 'admin')
             {
-                return response()->json(['error' => 'Не хватает прав для действий'], 401);
+                return response()->json(['error' => 'Не хватает прав для действий'], 403);
             }
         }
 

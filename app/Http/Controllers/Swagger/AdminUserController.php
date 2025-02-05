@@ -45,14 +45,26 @@ use App\Http\Controllers\Controller;
  *      ),
  * 
  *      @OA\Response(
- *          response=401,
+ *          response=403,
  *          description="Нехватка прав для действий",
  *          @OA\JsonContent(
  *              allOf={
  *                  @OA\Schema(
- *                      schema="AdminAuthError",
  *                      type="object",
  *                      @OA\Property(property="error", type="string", example="Не хватает прав для действий")
+ *                  )
+ *              }
+ *          )
+ *      ),
+ * 
+ *      @oA\Response(
+ *          response=401,
+ *          description="Неправильный токен",
+ *          @OA\JsonContent(
+ *              allOf={
+ *                  @OA\Schema(
+ *                      type="object",
+ *                      @OA\Property(property="error", type="string", example="Неправильный токен")
  *                  )
  *              }
  *          )
@@ -84,7 +96,6 @@ use App\Http\Controllers\Controller;
  *          @OA\JsonContent(
  *              allOf={
  *                  @OA\Schema(
- *                      schema="UserUpdateRequest",
  *                      type="object",
  *                      required={"name", "email", "password", "password_confirmation"},
  *                      @OA\Property(property="name", type="string", example="Takeshi Kitano"),
@@ -102,7 +113,6 @@ use App\Http\Controllers\Controller;
  *          @OA\JsonContent(
  *              allOf={
  *                  @OA\Schema(
- *                      schema="UserUpdateResponse",
  *                      type="object",
  *                      @OA\Property(property="status", type="string", example="Обновление прошло успешно"),
  *                      @OA\Property(property="newData", type="object",
@@ -124,7 +134,6 @@ use App\Http\Controllers\Controller;
  *          @OA\JsonContent(
  *              allOf={
  *                  @OA\Schema(
- *                      schema="ValidationError",
  *                      type="object",
  *                      example={
  *                          "name" : {"The name field is required."},
@@ -138,14 +147,26 @@ use App\Http\Controllers\Controller;
  *      ),
  * 
  *      @OA\Response(
- *          response=401,
+ *          response=403,
  *          description="Нехватка прав для действий",
  *          @OA\JsonContent(
  *              allOf={
  *                  @OA\Schema(
- *                      schema="AdminAuthError",
  *                      type="object",
  *                      @OA\Property(property="error", type="string", example="Не хватает прав для действий")
+ *                  )
+ *              }
+ *          )
+ *      ),
+ * 
+ *      @oA\Response(
+ *          response=401,
+ *          description="Неправильный токен",
+ *          @OA\JsonContent(
+ *              allOf={
+ *                  @OA\Schema(
+ *                      type="object",
+ *                      @OA\Property(property="error", type="string", example="Неправильный токен")
  *                  )
  *              }
  *          )
@@ -179,7 +200,6 @@ use App\Http\Controllers\Controller;
  *          @OA\JsonContent(
  *              allOf={
  *                  @OA\Schema(
- *                      schema="UserAdminUpdateResponse",
  *                      type="object",
  *                      @OA\Property(property="status", type="string", example="Пользователь User Name успешно удален")
  *                  )
@@ -193,7 +213,6 @@ use App\Http\Controllers\Controller;
  *          @OA\JsonContent(
  *              allOf={
  *                  @OA\Schema(
- *                      schema="UserUpdateResponse",
  *                      type="object",
  *                      @OA\Property(property="status", type="string", example="Пользователь не найден")
  *                  )
@@ -202,14 +221,26 @@ use App\Http\Controllers\Controller;
  *      ),
  * 
  *      @OA\Response(
- *          response=401,
+ *          response=403,
  *          description="Нехватка прав для действий",
  *          @OA\JsonContent(
  *              allOf={
  *                  @OA\Schema(
- *                      schema="AdminAuthError",
  *                      type="object",
  *                      @OA\Property(property="error", type="string", example="Не хватает прав для действий")
+ *                  )
+ *              }
+ *          )
+ *      ),
+ * 
+ *      @oA\Response(
+ *          response=401,
+ *          description="Неправильный токен",
+ *          @OA\JsonContent(
+ *              allOf={
+ *                  @OA\Schema(
+ *                      type="object",
+ *                      @OA\Property(property="error", type="string", example="Неправильный токен")
  *                  )
  *              }
  *          )

@@ -28,7 +28,7 @@
                         "required": false,
                         "schema": {
                             "type": "integer",
-                            "example": "5"
+                            "example": 5
                         }
                     },
                     {
@@ -36,7 +36,6 @@
                         "in": "header",
                         "required": true,
                         "schema": {
-                            "schema": "GetAdminOrdersRequest",
                             "type": "string",
                             "example": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1..."
                         }
@@ -50,7 +49,6 @@
                                 "schema": {
                                     "allOf": [
                                         {
-                                            "schema": "GetAdminOrdersResponse",
                                             "properties": {
                                                 "orders": {
                                                     "type": "array",
@@ -128,18 +126,37 @@
                             }
                         }
                     },
-                    "401": {
+                    "403": {
                         "description": "Нехватка прав для действий",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "allOf": [
                                         {
-                                            "schema": "AdminAuthError",
                                             "properties": {
                                                 "error": {
                                                     "type": "string",
                                                     "example": "Не хватает прав для действий"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Неправильный токен",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "properties": {
+                                                "error": {
+                                                    "type": "string",
+                                                    "example": "Неправильный токен"
                                                 }
                                             },
                                             "type": "object"
@@ -185,7 +202,6 @@
                     "content": {
                         "multipart/form-data": {
                             "schema": {
-                                "schema": "UpdateAdminOrderRequest",
                                 "required": [
                                     "order",
                                     "address",
@@ -222,51 +238,71 @@
                                 "schema": {
                                     "allOf": [
                                         {
-                                            "schema": "UpdateAdminOrderResponse",
                                             "properties": {
-                                                "order": {
+                                                "status": {
                                                     "type": "string",
-                                                    "example": "Animi veniam aliquid vel quia quam at."
+                                                    "example": "Обновление прошло успешно"
                                                 },
-                                                "address": {
-                                                    "type": "string",
-                                                    "example": "г. Москва, ул. Пушкина 4б"
-                                                },
-                                                "phone": {
-                                                    "type": "string",
-                                                    "example": "88005553535"
-                                                },
-                                                "files": {
-                                                    "type": "array",
-                                                    "items": {
-                                                        "properties": {
-                                                            "id": {
-                                                                "type": "integer",
-                                                                "example": 84
-                                                            },
-                                                            "item_name": {
-                                                                "type": "string",
-                                                                "example": "test.jpg"
-                                                            },
-                                                            "path": {
-                                                                "type": "string",
-                                                                "example": "/storage/app/public/test.jpg"
-                                                            },
-                                                            "orders_id": {
-                                                                "type": "integer",
-                                                                "example": 1
-                                                            },
-                                                            "created_at": {
-                                                                "type": "timestamp",
-                                                                "example": "2025-02-03T05:34:02.000000Z"
-                                                            },
-                                                            "updated_at": {
-                                                                "type": "timestamp",
-                                                                "example": "2025-02-03T05:34:02.000000Z"
-                                                            }
+                                                "newData": {
+                                                    "properties": {
+                                                        "order": {
+                                                            "type": "string",
+                                                            "example": "Animi veniam aliquid vel quia quam at."
                                                         },
-                                                        "type": "object"
-                                                    }
+                                                        "address": {
+                                                            "type": "string",
+                                                            "example": "г. Москва, ул. Пушкина 4б"
+                                                        },
+                                                        "phone": {
+                                                            "type": "string",
+                                                            "example": "88005553535"
+                                                        },
+                                                        "created_at": {
+                                                            "type": "string",
+                                                            "format": "date-time",
+                                                            "example": "2025-02-03T05:34:02.000000Z"
+                                                        },
+                                                        "updated_at": {
+                                                            "type": "string",
+                                                            "format": "date-time",
+                                                            "example": "2025-02-03T05:34:02.000000Z"
+                                                        },
+                                                        "files": {
+                                                            "type": "array",
+                                                            "items": {
+                                                                "properties": {
+                                                                    "id": {
+                                                                        "type": "integer",
+                                                                        "example": 84
+                                                                    },
+                                                                    "item_name": {
+                                                                        "type": "string",
+                                                                        "example": "test.jpg"
+                                                                    },
+                                                                    "path": {
+                                                                        "type": "string",
+                                                                        "example": "/storage/app/public/test.jpg"
+                                                                    },
+                                                                    "orders_id": {
+                                                                        "type": "integer",
+                                                                        "example": 1
+                                                                    },
+                                                                    "created_at": {
+                                                                        "type": "string",
+                                                                        "format": "date-time",
+                                                                        "example": "2025-02-03T05:34:02.000000Z"
+                                                                    },
+                                                                    "updated_at": {
+                                                                        "type": "string",
+                                                                        "format": "date-time",
+                                                                        "example": "2025-02-03T05:34:02.000000Z"
+                                                                    }
+                                                                },
+                                                                "type": "object"
+                                                            }
+                                                        }
+                                                    },
+                                                    "type": "object"
                                                 }
                                             },
                                             "type": "object"
@@ -283,7 +319,6 @@
                                 "schema": {
                                     "allOf": [
                                         {
-                                            "schema": "ValidationError",
                                             "type": "object",
                                             "example": {
                                                 "order": [
@@ -302,18 +337,37 @@
                             }
                         }
                     },
-                    "401": {
+                    "403": {
                         "description": "Нехватка прав для действий",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "allOf": [
                                         {
-                                            "schema": "AdminAuthError",
                                             "properties": {
                                                 "error": {
                                                     "type": "string",
                                                     "example": "Не хватает прав для действий"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Неправильный токен",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "properties": {
+                                                "error": {
+                                                    "type": "string",
+                                                    "example": "Неправильный токен"
                                                 }
                                             },
                                             "type": "object"
@@ -362,7 +416,6 @@
                                 "schema": {
                                     "allOf": [
                                         {
-                                            "schema": "OrderAdminDeleteResponse",
                                             "properties": {
                                                 "status": {
                                                     "type": "string",
@@ -383,7 +436,6 @@
                                 "schema": {
                                     "allOf": [
                                         {
-                                            "schema": "OrderAdminDeleteResponse",
                                             "properties": {
                                                 "status": {
                                                     "type": "string",
@@ -397,18 +449,37 @@
                             }
                         }
                     },
-                    "401": {
+                    "403": {
                         "description": "Нехватка прав для действий",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "allOf": [
                                         {
-                                            "schema": "AdminAuthError",
                                             "properties": {
                                                 "error": {
                                                     "type": "string",
                                                     "example": "Не хватает прав для действий"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Неправильный токен",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "properties": {
+                                                "error": {
+                                                    "type": "string",
+                                                    "example": "Неправильный токен"
                                                 }
                                             },
                                             "type": "object"
@@ -490,18 +561,37 @@
                             }
                         }
                     },
-                    "401": {
+                    "403": {
                         "description": "Нехватка прав для действий",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "allOf": [
                                         {
-                                            "schema": "AdminAuthError",
                                             "properties": {
                                                 "error": {
                                                     "type": "string",
                                                     "example": "Не хватает прав для действий"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Неправильный токен",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "properties": {
+                                                "error": {
+                                                    "type": "string",
+                                                    "example": "Неправильный токен"
                                                 }
                                             },
                                             "type": "object"
@@ -549,7 +639,6 @@
                             "schema": {
                                 "allOf": [
                                     {
-                                        "schema": "UserUpdateRequest",
                                         "required": [
                                             "name",
                                             "email",
@@ -592,7 +681,6 @@
                                 "schema": {
                                     "allOf": [
                                         {
-                                            "schema": "UserUpdateResponse",
                                             "properties": {
                                                 "status": {
                                                     "type": "string",
@@ -643,7 +731,6 @@
                                 "schema": {
                                     "allOf": [
                                         {
-                                            "schema": "ValidationError",
                                             "type": "object",
                                             "example": {
                                                 "name": [
@@ -665,18 +752,37 @@
                             }
                         }
                     },
-                    "401": {
+                    "403": {
                         "description": "Нехватка прав для действий",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "allOf": [
                                         {
-                                            "schema": "AdminAuthError",
                                             "properties": {
                                                 "error": {
                                                     "type": "string",
                                                     "example": "Не хватает прав для действий"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Неправильный токен",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "properties": {
+                                                "error": {
+                                                    "type": "string",
+                                                    "example": "Неправильный токен"
                                                 }
                                             },
                                             "type": "object"
@@ -725,7 +831,6 @@
                                 "schema": {
                                     "allOf": [
                                         {
-                                            "schema": "UserAdminUpdateResponse",
                                             "properties": {
                                                 "status": {
                                                     "type": "string",
@@ -746,7 +851,6 @@
                                 "schema": {
                                     "allOf": [
                                         {
-                                            "schema": "UserUpdateResponse",
                                             "properties": {
                                                 "status": {
                                                     "type": "string",
@@ -760,18 +864,722 @@
                             }
                         }
                     },
-                    "401": {
+                    "403": {
                         "description": "Нехватка прав для действий",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "allOf": [
                                         {
-                                            "schema": "AdminAuthError",
                                             "properties": {
                                                 "error": {
                                                     "type": "string",
                                                     "example": "Не хватает прав для действий"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Неправильный токен",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "properties": {
+                                                "error": {
+                                                    "type": "string",
+                                                    "example": "Неправильный токен"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/client/get_orders/{orderId}": {
+            "get": {
+                "tags": [
+                    "Client"
+                ],
+                "summary": "Получение заявок текущего пользователя",
+                "description": "Если есть orderId - вернет конкретную заявку. Если нет - вернет все заявки",
+                "operationId": "50cde1abfb64b47ab2a43d9936c71a88",
+                "parameters": [
+                    {
+                        "name": "orderId",
+                        "in": "path",
+                        "description": "ID заявки (необязательный параметр)",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "example": 5
+                        }
+                    },
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1..."
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Успешное получение заявок",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "properties": {
+                                                "orders": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "integer",
+                                                                "example": 1
+                                                            },
+                                                            "order": {
+                                                                "type": "string",
+                                                                "example": "Animi veniam aliquid vel quia quam at."
+                                                            },
+                                                            "address": {
+                                                                "type": "string",
+                                                                "example": "г. Москва, ул. Пушкина 4б"
+                                                            },
+                                                            "phone": {
+                                                                "type": "string",
+                                                                "example": "88005553535"
+                                                            },
+                                                            "user_id": {
+                                                                "type": "integer",
+                                                                "example": 3
+                                                            },
+                                                            "created_at": {
+                                                                "type": "string",
+                                                                "format": "date-time",
+                                                                "example": "2025-02-03T05:34:02.000000Z"
+                                                            },
+                                                            "updated_at": {
+                                                                "type": "string",
+                                                                "format": "date-time",
+                                                                "example": "2025-02-03T05:34:02.000000Z"
+                                                            },
+                                                            "get_files": {
+                                                                "type": "array",
+                                                                "items": {
+                                                                    "properties": {
+                                                                        "id": {
+                                                                            "type": "integer",
+                                                                            "example": 84
+                                                                        },
+                                                                        "item_name": {
+                                                                            "type": "string",
+                                                                            "example": "test.jpg"
+                                                                        },
+                                                                        "path": {
+                                                                            "type": "string",
+                                                                            "example": "/storage/app/public/test.jpg"
+                                                                        },
+                                                                        "orders_id": {
+                                                                            "type": "integer",
+                                                                            "example": 1
+                                                                        },
+                                                                        "created_at": {
+                                                                            "type": "string",
+                                                                            "format": "date-time",
+                                                                            "example": "2025-02-03T05:34:02.000000Z"
+                                                                        },
+                                                                        "updated_at": {
+                                                                            "type": "string",
+                                                                            "format": "date-time",
+                                                                            "example": "2025-02-03T05:34:02.000000Z"
+                                                                        }
+                                                                    },
+                                                                    "type": "object"
+                                                                }
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Нехватка прав для действий",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "properties": {
+                                                "error": {
+                                                    "type": "string",
+                                                    "example": "Не хватает прав для действий"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Неправильный токен",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "properties": {
+                                                "error": {
+                                                    "type": "string",
+                                                    "example": "Неправильный токен"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/client/add_order": {
+            "post": {
+                "tags": [
+                    "Client"
+                ],
+                "summary": "Создание новой заявки",
+                "operationId": "439da313a26b2ed24390d2fb4e2a1438",
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1..."
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "order",
+                                    "address",
+                                    "phone"
+                                ],
+                                "properties": {
+                                    "order": {
+                                        "type": "string",
+                                        "example": "Animi veniam aliquid vel quia quam at."
+                                    },
+                                    "address": {
+                                        "type": "string",
+                                        "example": "г. Москва, ул. Пушкина 4б"
+                                    },
+                                    "phone": {
+                                        "type": "string",
+                                        "example": "88005553535"
+                                    },
+                                    "files": {
+                                        "type": "string",
+                                        "example": "Массив для загрузки файлов"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Успешное создание заявки",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "properties": {
+                                                "status": {
+                                                    "type": "string",
+                                                    "example": "Заявка успешно создана"
+                                                },
+                                                "newData": {
+                                                    "properties": {
+                                                        "order": {
+                                                            "type": "string",
+                                                            "example": "Animi veniam aliquid vel quia quam at."
+                                                        },
+                                                        "address": {
+                                                            "type": "string",
+                                                            "example": "г. Москва, ул. Пушкина 4б"
+                                                        },
+                                                        "phone": {
+                                                            "type": "string",
+                                                            "example": "88005553535"
+                                                        },
+                                                        "created_at": {
+                                                            "type": "string",
+                                                            "format": "date-time",
+                                                            "example": "2025-02-03T05:34:02.000000Z"
+                                                        },
+                                                        "updated_at": {
+                                                            "type": "string",
+                                                            "format": "date-time",
+                                                            "example": "2025-02-03T05:34:02.000000Z"
+                                                        },
+                                                        "files": {
+                                                            "type": "array",
+                                                            "items": {
+                                                                "properties": {
+                                                                    "id": {
+                                                                        "type": "integer",
+                                                                        "example": 84
+                                                                    },
+                                                                    "item_name": {
+                                                                        "type": "string",
+                                                                        "example": "test.jpg"
+                                                                    },
+                                                                    "path": {
+                                                                        "type": "string",
+                                                                        "example": "/storage/app/public/test.jpg"
+                                                                    },
+                                                                    "orders_id": {
+                                                                        "type": "integer",
+                                                                        "example": 1
+                                                                    },
+                                                                    "created_at": {
+                                                                        "type": "string",
+                                                                        "format": "date-time",
+                                                                        "example": "2025-02-03T05:34:02.000000Z"
+                                                                    },
+                                                                    "updated_at": {
+                                                                        "type": "string",
+                                                                        "format": "date-time",
+                                                                        "example": "2025-02-03T05:34:02.000000Z"
+                                                                    }
+                                                                },
+                                                                "type": "object"
+                                                            }
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Ошибка валидации",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "type": "object",
+                                            "example": {
+                                                "order": [
+                                                    "The order field is required."
+                                                ],
+                                                "address": [
+                                                    "The address field is required."
+                                                ],
+                                                "phone": [
+                                                    "The phone field is required."
+                                                ]
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Нехватка прав для действий",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "properties": {
+                                                "error": {
+                                                    "type": "string",
+                                                    "example": "Не хватает прав для действий"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Неправильный токен",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "properties": {
+                                                "error": {
+                                                    "type": "string",
+                                                    "example": "Неправильный токен"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/client/update_order/{orderId}": {
+            "post": {
+                "tags": [
+                    "Client"
+                ],
+                "summary": "Обновление заявки",
+                "operationId": "97f732080ef0c9a86a784c4b230f6bba",
+                "parameters": [
+                    {
+                        "name": "orderId",
+                        "in": "path",
+                        "description": "ID заявки для обновления",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 5
+                        }
+                    },
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1..."
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "order",
+                                    "address",
+                                    "phone"
+                                ],
+                                "properties": {
+                                    "order": {
+                                        "type": "string",
+                                        "example": "Animi veniam aliquid vel quia quam at."
+                                    },
+                                    "address": {
+                                        "type": "string",
+                                        "example": "г. Москва, ул. Пушкина 4б"
+                                    },
+                                    "phone": {
+                                        "type": "string",
+                                        "example": "88005553535"
+                                    },
+                                    "files": {
+                                        "type": "string",
+                                        "example": "Массив для загрузки файлов"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Успешное обновление заявки",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "properties": {
+                                                "status": {
+                                                    "type": "string",
+                                                    "example": "Обновление прошло успешно"
+                                                },
+                                                "newData": {
+                                                    "properties": {
+                                                        "order": {
+                                                            "type": "string",
+                                                            "example": "Animi veniam aliquid vel quia quam at."
+                                                        },
+                                                        "address": {
+                                                            "type": "string",
+                                                            "example": "г. Москва, ул. Пушкина 4б"
+                                                        },
+                                                        "phone": {
+                                                            "type": "string",
+                                                            "example": "88005553535"
+                                                        },
+                                                        "created_at": {
+                                                            "type": "string",
+                                                            "format": "date-time",
+                                                            "example": "2025-02-03T05:34:02.000000Z"
+                                                        },
+                                                        "updated_at": {
+                                                            "type": "string",
+                                                            "format": "date-time",
+                                                            "example": "2025-02-03T05:34:02.000000Z"
+                                                        },
+                                                        "files": {
+                                                            "type": "array",
+                                                            "items": {
+                                                                "properties": {
+                                                                    "id": {
+                                                                        "type": "integer",
+                                                                        "example": 84
+                                                                    },
+                                                                    "item_name": {
+                                                                        "type": "string",
+                                                                        "example": "test.jpg"
+                                                                    },
+                                                                    "path": {
+                                                                        "type": "string",
+                                                                        "example": "/storage/app/public/test.jpg"
+                                                                    },
+                                                                    "orders_id": {
+                                                                        "type": "integer",
+                                                                        "example": 1
+                                                                    },
+                                                                    "created_at": {
+                                                                        "type": "string",
+                                                                        "format": "date-time",
+                                                                        "example": "2025-02-03T05:34:02.000000Z"
+                                                                    },
+                                                                    "updated_at": {
+                                                                        "type": "string",
+                                                                        "format": "date-time",
+                                                                        "example": "2025-02-03T05:34:02.000000Z"
+                                                                    }
+                                                                },
+                                                                "type": "object"
+                                                            }
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Ошибка валидации",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "type": "object",
+                                            "example": {
+                                                "order": [
+                                                    "The order field is required."
+                                                ],
+                                                "address": [
+                                                    "The address field is required."
+                                                ],
+                                                "phone": [
+                                                    "The phone field is required."
+                                                ]
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Нехватка прав для действий",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "properties": {
+                                                "error": {
+                                                    "type": "string",
+                                                    "example": "Не хватает прав для действий"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Неправильный токен",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "properties": {
+                                                "error": {
+                                                    "type": "string",
+                                                    "example": "Неправильный токен"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/client/delete_order/{orderId}": {
+            "delete": {
+                "tags": [
+                    "Client"
+                ],
+                "summary": "Удаление заявки пользователем",
+                "operationId": "1fa897480c4c53f2d4dcf0896268ab06",
+                "parameters": [
+                    {
+                        "name": "orderId",
+                        "in": "path",
+                        "description": "ID заявки для удаления",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 5
+                        }
+                    },
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1..."
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Успешное удаление заявки",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "properties": {
+                                                "status": {
+                                                    "type": "string",
+                                                    "example": "Заявка успешно удалена"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "204": {
+                        "description": "Проблема с нахождением заявки",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "properties": {
+                                                "status": {
+                                                    "type": "string",
+                                                    "example": "Заявка не найдена"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Нехватка прав для действий",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "properties": {
+                                                "error": {
+                                                    "type": "string",
+                                                    "example": "Не хватает прав для действий"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Неправильный токен",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "properties": {
+                                                "error": {
+                                                    "type": "string",
+                                                    "example": "Неправильный токен"
                                                 }
                                             },
                                             "type": "object"
@@ -798,7 +1606,6 @@
                             "schema": {
                                 "allOf": [
                                     {
-                                        "schema": "RegisterRequest",
                                         "required": [
                                             "name",
                                             "email",
@@ -841,7 +1648,6 @@
                                 "schema": {
                                     "allOf": [
                                         {
-                                            "schema": "RegisterResponse",
                                             "properties": {
                                                 "user": {
                                                     "properties": {
@@ -884,7 +1690,6 @@
                                 "schema": {
                                     "allOf": [
                                         {
-                                            "schema": "ValidationError",
                                             "type": "object",
                                             "example": {
                                                 "email": [
@@ -917,7 +1722,6 @@
                             "schema": {
                                 "allOf": [
                                     {
-                                        "schema": "LoginRequest",
                                         "required": [
                                             "email",
                                             "password"
@@ -949,7 +1753,6 @@
                                 "schema": {
                                     "allOf": [
                                         {
-                                            "schema": "LoginResponse",
                                             "properties": {
                                                 "token": {
                                                     "type": "string",
@@ -970,7 +1773,6 @@
                                 "schema": {
                                     "allOf": [
                                         {
-                                            "schema": "LoginError",
                                             "properties": {
                                                 "error": {
                                                     "type": "string",
@@ -991,7 +1793,6 @@
                                 "schema": {
                                     "allOf": [
                                         {
-                                            "schema": "LoginError",
                                             "properties": {
                                                 "error": {
                                                     "type": "string",
@@ -1034,7 +1835,6 @@
                                 "schema": {
                                     "allOf": [
                                         {
-                                            "schema": "UserResponse",
                                             "properties": {
                                                 "user": {
                                                     "properties": {
@@ -1081,7 +1881,6 @@
                                 "schema": {
                                     "allOf": [
                                         {
-                                            "schema": "LoginError",
                                             "properties": {
                                                 "error": {
                                                     "type": "string",
@@ -1095,14 +1894,13 @@
                             }
                         }
                     },
-                    "400": {
+                    "401": {
                         "description": "Неправильный токен",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "allOf": [
                                         {
-                                            "schema": "LoginError",
                                             "properties": {
                                                 "error": {
                                                     "type": "string",
@@ -1144,7 +1942,6 @@
                             "schema": {
                                 "allOf": [
                                     {
-                                        "schema": "LoginRequest",
                                         "required": [
                                             "email",
                                             "password"
@@ -1176,11 +1973,30 @@
                                 "schema": {
                                     "allOf": [
                                         {
-                                            "schema": "LoginResponse",
                                             "properties": {
                                                 "message": {
                                                     "type": "string",
                                                     "example": "Успешный выход из акаунта"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Неправильный токен",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "properties": {
+                                                "error": {
+                                                    "type": "string",
+                                                    "example": "Неправильный токен"
                                                 }
                                             },
                                             "type": "object"
@@ -1198,6 +2014,10 @@
         {
             "name": "Admin",
             "description": "Admin"
+        },
+        {
+            "name": "Client",
+            "description": "Client"
         },
         {
             "name": "Auth",

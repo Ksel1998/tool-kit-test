@@ -22,7 +22,7 @@ class AdminMiddleware
         
         if ($userRole->name !== 'admin')
         {
-            return response()->json(['error' => 'Не хватает прав для действий'], 401);
+            return response()->json(['error' => 'Не хватает прав для действий'], 403);
         }
 
         return $next($request);
