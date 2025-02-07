@@ -33,8 +33,7 @@ clear:
 serve:
 	php artisan serve --port=8008
 
-# Быстрый старт через artisan
-fast-start:
+# Быстрая настройка
+fast-setting:
 	db-settings
 	install
-	serve
